@@ -6,19 +6,19 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
-public class RevoluteJoint {
+public class PongRevoluteJoint {
 	RevoluteJointDef revoluteJointDef;
 	
-	public RevoluteJoint(Body bodyA,Body bodyB,boolean collideConnected){
+	public PongRevoluteJoint(Body bodyA,Body bodyB,boolean collideConnected){
 		revoluteJointDef = new RevoluteJointDef();
 		CreateRevoluteJoint(bodyA,bodyB,collideConnected);
 	}
 	
-	void CreateRevoluteJoint(Body bodyA,Body bodyB,boolean collideConnected){
+	void CreateRevoluteJoint(Body bodyA,Body bodyB,boolean collideConnected)
+	{
 		revoluteJointDef.bodyA=bodyA;
 		revoluteJointDef.bodyB=bodyB;
 		revoluteJointDef.collideConnected=collideConnected;
-		
 	}
 	
 	public void SetAnchorA(float x,float y){
