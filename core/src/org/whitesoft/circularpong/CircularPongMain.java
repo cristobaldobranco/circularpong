@@ -80,11 +80,16 @@ public class CircularPongMain extends ApplicationAdapter {
 		
 		//Creating the pivot and the rotating body
 		BoxBodyBuilder bodyFactory=new BoxBodyBuilder();
-		pivot=bodyFactory.CreateCircleBody(world, BodyType.StaticBody, 200, 200, 30);
+		pivot=bodyFactory.createCircleBody(world, BodyType.StaticBody, 200, 200, 30);
 //		spike=bodyFactory.CreateCircleBody(world, BodyType.DynamicBody, 200, 200, 20);
-		spike=bodyFactory.CreateBoxBody(world, BodyType.DynamicBody, 185, 200, 30, 5);
+		spike=bodyFactory.createBoxBody(world, BodyType.DynamicBody, 185, 200, 30, 5);
 		
 		makeJoint(); //the function below creates the joint
+		
+		bodyFactory.createHollowCircleBody(world, 200, 200, 130, 64);
+		
+		Body ball = bodyFactory.createCircleBody(world, BodyType.DynamicBody, 200, 300, 5);
+		ball.setLinearVelocity(1, 1);
 		
 	}  
 	@Override  
