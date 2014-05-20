@@ -113,5 +113,59 @@ public class BoxBodyBuilder {
 		fixtureDef.shape.dispose();
 		return body;	
 	}	
+
+	public Body createArc(World world, float centerx,float centery, float ccwendx,float ccwendy, float degrees, int segments)
+	{
+		if (segments < 4)
+		{
+			return null;
+		}
+		
+		while (segments * 2 > degrees)
+		{
+			segments /= 2;
+		}
+
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type= BodyType.StaticBody;
+		bodyDef.linearDamping = 3.0f;
+		bodyDef.angularDamping = 2.0f;
+
+		Vector2 [] list = new Vector2[segments + 1];
+		float angleStep = degrees / (float) segments;
+		double dx = Math.abs(ccwendx - centerx);
+		double dy = Math.abs(ccwendy - centery);
+		double radius = Math.sqrt(dx*dx + dy*dy);
+		dx = (ccwendx - centerx) / radius;
+		dy = (ccwendy - centery) / radius;
+		
+		double anglebase = Math.atan2(dy, dx);
+		
+		
+		for ( int i = 0; i <= segments; i++)
+		{
+			list[i] = new Vector2(ConvertToBox((float) (centerx + radius * Math.sin(Math.toRadians(Math.toDegrees(anglebase) + i * angleStep)))), 
+					              ConvertToBox((float) (centery + radius * Math.cos(Math.toRadians(Math.toDegrees(anglebase) + i * angleStep)))));
+		}
+
+		Body body = world.createBody(bodyDef);
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		ChainShape shape = new ChainShape();
+		shape.createChain(list);
+		fixtureDef.shape = shape;
+		
+		fixtureDef.density = 1;
+		fixtureDef.restitution = 1; 
+		fixtureDef.friction = 0;
+
+		// Create our fixture and attach it to the body
+		body.createFixture(fixtureDef);
+		fixtureDef.shape.dispose();
+		return body;	
+
+		
+	}
+	
 	
 }	

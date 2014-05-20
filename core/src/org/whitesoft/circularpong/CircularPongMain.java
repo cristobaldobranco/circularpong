@@ -86,7 +86,8 @@ public class CircularPongMain extends ApplicationAdapter {
 		
 		makeJoint(); //the function below creates the joint
 		
-		bodyFactory.createHollowCircleBody(world, 200, 200, 130, 64);
+//		bodyFactory.createHollowCircleBody(world, 200, 200, 130, 64);
+		bodyFactory.createArc(world, 200, 200, 322, 250, 31,  16);
 		
 		Body ball = bodyFactory.createCircleBody(world, BodyType.DynamicBody, 200, 300, 5);
 		ball.setLinearVelocity(1, 1);
