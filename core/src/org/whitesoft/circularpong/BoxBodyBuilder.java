@@ -1,7 +1,5 @@
 package org.whitesoft.circularpong;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -70,6 +68,44 @@ public class BoxBodyBuilder {
 		fixtureDef.friction = 0;
 
 		// Create our fixture and attach it to the body
+		body.createFixture(fixtureDef);
+		fixtureDef.shape.dispose();
+		return body;	
+	}	
+
+	public Body createBoxBodyFromLine(World world,BodyType bodyType,float startx,float starty,float endx, float endy, float width)
+	{
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type=bodyType;
+		bodyDef.linearDamping = 3.0f;
+		bodyDef.angularDamping = 2.0f;
+		
+		Vector2 [] box = new Vector2[4];
+		box[0] = new Vector2(ConvertToBox(startx), ConvertToBox(starty));
+		box[1] = new Vector2(ConvertToBox(endx),   ConvertToBox(endy));
+		box[2] = box[1].cpy();
+		box[3] = box[0].cpy();
+		
+		Vector2 dir = new Vector2(ConvertToBox(endx - startx), ConvertToBox(endy - starty));
+		dir.rotate90(0).clamp(ConvertToBox(width), ConvertToBox(width));
+		box[2].add(dir);
+		box[3].add(dir);
+
+		// Create a fixture definition to apply our shape to
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = new PolygonShape();
+		((PolygonShape) fixtureDef.shape).set(box);
+		fixtureDef.density = 1;
+		fixtureDef.restitution = 1; 
+		fixtureDef.friction = 0;
+		
+		dir = new Vector2(box[2].x - box[0].x, box[2].y - box[0].y);
+		dir.scl(0.5f).add(box[0]);
+		
+		bodyDef.position.set(dir);
+
+		// Create our fixture and attach it to the body
+		Body body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef);
 		fixtureDef.shape.dispose();
 		return body;	
@@ -166,6 +202,8 @@ public class BoxBodyBuilder {
 
 		
 	}
+	
+
 	
 	
 }	
