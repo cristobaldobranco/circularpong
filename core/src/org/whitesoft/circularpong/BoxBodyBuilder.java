@@ -102,7 +102,7 @@ public class BoxBodyBuilder {
 		dir = new Vector2(box[2].x - box[0].x, box[2].y - box[0].y);
 		dir.scl(0.5f).add(box[0]);
 		
-		bodyDef.position.set(dir);
+//		bodyDef.position.set(dir);
 
 		// Create our fixture and attach it to the body
 		Body body = world.createBody(bodyDef);

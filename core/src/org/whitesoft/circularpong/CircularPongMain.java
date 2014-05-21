@@ -89,7 +89,7 @@ public class CircularPongMain extends ApplicationAdapter {
 		
 //		bodyFactory.createHollowCircleBody(world, 200, 200, 130, 64);
 //		bodyFactory.createArc(world, 200, 200, 322, 250, 31,  16);
-		paddle = new SegmentedArcedPaddle(world, 200, 200, 150, 100, 45,  1, 20);
+		paddle = new SegmentedArcedPaddle(world, 200, 200, 150, 100, 60,  9, 5);
 		
 		Body ball = bodyFactory.createCircleBody(world, BodyType.DynamicBody, 200, 300, 5);
 		ball.setLinearVelocity(1, 1);
