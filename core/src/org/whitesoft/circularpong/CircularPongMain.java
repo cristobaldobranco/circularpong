@@ -34,11 +34,13 @@ public class CircularPongMain extends ApplicationAdapter {
 	void makeJoint()
 	{
 		//Using our custom class to create the revolute joint def
-		PongRevoluteJoint j = new PongRevoluteJoint(pivot,spike,false);
+		Body b = paddle.bodies.get(1);
+		PongRevoluteJoint j = new PongRevoluteJoint(pivot, b,false);
+		
 		//Set Anchor A location
-		j.SetAnchorA(BoxBodyBuilder.ConvertToBox(0), BoxBodyBuilder.ConvertToBox(0));
+		j.SetAnchorA(0,0);
 		//Set Anchor B location
-		j.SetAnchorB(BoxBodyBuilder.ConvertToBox(0), BoxBodyBuilder.ConvertToBox(100));
+		j.SetAnchorB(b.getLocalPoint(b.getWorldCenter()).x, b.getLocalPoint(b.getWorldCenter()).y);
 		//Set revolution speed and torque
 		j.SetMotor(20, 180);
 		//This creates the joint
@@ -85,11 +87,11 @@ public class CircularPongMain extends ApplicationAdapter {
 //		spike=bodyFactory.CreateCircleBody(world, BodyType.DynamicBody, 200, 200, 20);
 		spike=bodyFactory.createBoxBody(world, BodyType.DynamicBody, 185, 200, 30, 5);
 		
-		makeJoint(); //the function below creates the joint
 		
 //		bodyFactory.createHollowCircleBody(world, 200, 200, 130, 64);
 //		bodyFactory.createArc(world, 200, 200, 322, 250, 31,  16);
-		paddle = new SegmentedArcedPaddle(world, 200, 200, 150, 100, 60,  9, 5);
+		paddle = new SegmentedArcedPaddle(world, 200, 200, 100, 100, 60,  2, 5);
+		makeJoint(); //the function below creates the joint
 		
 		Body ball = bodyFactory.createCircleBody(world, BodyType.DynamicBody, 200, 300, 5);
 		ball.setLinearVelocity(1, 1);
